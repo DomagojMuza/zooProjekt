@@ -6,6 +6,7 @@
                 <div class="col-12">
                     <input v-model="email" type="email" class="form-control" placeholder="Email">
                     <input v-model="password" type="password" class="form-control" placeholder="Password">
+                    <p @click.prevent="resetajPassword">Zaboravljena lozinka?</p>
                     <button @click.prevent="logIn()" class="btn btn-primary my-1">Login</button>
                 </div>         
             
@@ -18,6 +19,8 @@
 <script>
 import firebase from 'firebase'
 import db from '@/firebase/init'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default {
     data(){
@@ -51,9 +54,22 @@ export default {
             })
             
 
-        }
-    },
-}
+        },
+        async resetajPassword(){    
+        const { value: email } = await Swal.fire({
+            title: 'Input email address',
+            input: 'email',
+            inputPlaceholder: 'Enter your email address'
+        });
+
+            if (email) {
+                var auth = firebase.auth();
+                auth.sendPasswordResetEmail(email)
+            }
+
+        },
+    }
+} 
 </script>
 
 <style lang="css" scoped>
@@ -61,6 +77,18 @@ export default {
         padding-top: 15px;
         padding-bottom: 15px; 
     }
+
+    p{
+        font-size: 12px;
+        text-align: left;
+        padding: 0;
+    }
+
+    P:hover{
+        color:blue;
+        cursor: pointer;
+    }
+
     .col-12{
         margin-left: auto;
         margin-right: auto;
@@ -86,11 +114,11 @@ export default {
     }
     
     input{
-        margin: 15px 0;
+        margin: 15px 0 0 0;
     }
 
     select{
-        margin:15px 0;
+        margin: 15px 0;
     }
     
 </style>

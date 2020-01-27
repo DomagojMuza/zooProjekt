@@ -36,6 +36,8 @@
           
         </ul>
         <ul class="navbar-nav">
+          <li v-if="$store.state.logged" @click="promjeniLozinku" class="nav-link">Promjeni lozinku</li>
+
           <li v-if="$store.state.logged" class="nav-item">
             <button class="btn btn-light my-2 my-sm-0 mr-2" @click.prevent="signOut">Odjava</button>
           </li>
@@ -58,6 +60,8 @@
 
 <script>
 import firebase from 'firebase'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default {
   methods: {
@@ -69,7 +73,27 @@ export default {
       this.$store.commit("postaviPosao", false);
       this.$router.push('login')
       return
-  }
+    },
+    promjeniLozinku(){
+      Swal.fire({
+        title: 'Želite li promjeniti lozinku?',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Želim'
+      }).then((result) => {
+        if (result.value) {
+          var email = firebase.auth().currentUser.email
+          var auth = firebase.auth();
+            auth.sendPasswordResetEmail(email)
+          Swal.fire(
+            'Poslano!',
+            'Provjerite svoj email sandučić'
+          )
+        }
+      })
+      
+    }
   },
 }
 </script>
@@ -86,5 +110,9 @@ export default {
   background-color: rgba(101, 247, 101, 0.692);
   border: 1px rgba(148, 228, 148, 0.404) solid;
   font-size: 18px; 
+}
+
+.nav-link:hover{
+  cursor: pointer;
 }
 </style>

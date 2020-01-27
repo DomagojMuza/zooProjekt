@@ -72,6 +72,8 @@
 <script>
 import db from '@/firebase/init'
 import firebase from 'firebase'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 export default {
     data(){
@@ -124,6 +126,7 @@ export default {
                         kosarica: this.kosarica,
                         kupac: this.kupac,
                         ukupnaCijena: this.UkupnaCijena,
+                        poslano: 'ne',
                         vrijeme: Date.now()
                     }).then(() =>{
 
@@ -132,7 +135,13 @@ export default {
 
                     var addMessage = firebase.functions().httpsCallable('sendMail');
                             addMessage({mail: this.kupac.email, naslovEmaila: naslov, porukaEmaila: poruka}).then(() => {
-                                alert("Narudžba uspješna");
+                                Swal.fire({
+                                    position: 'top-end',
+                                    icon: 'success',
+                                    title: 'Provjerite email sandučić',
+                                    showConfirmButton: true,
+
+                                    })
                             });
 
                     this.$store.commit("isprazniKosaricu", []);

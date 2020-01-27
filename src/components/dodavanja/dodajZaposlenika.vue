@@ -15,7 +15,7 @@
         <form>
             <div class="row">
                 <div class="col">
-                    <input v-model="email" type="text" class="form-control" placeholder="Email">
+                    <input v-model="osoba.email" type="text" class="form-control" placeholder="Email">
                     <input v-model="password" type="password" class="form-control" placeholder="Passoword">
 
                     <select v-model="osoba.posao" class="form-control" placeholder="Posao">
@@ -52,9 +52,9 @@ export default {
                 prezime:'',
                 brojMobitela:'',
                 adresa:'',
-                posao:''
+                posao:'',
+                email:''
             },
-            email:'',
             password:'',
             feedback:'',
             success:''
@@ -67,7 +67,7 @@ export default {
             }
             else{
                 //iz varijable email brišemo sve znakove, umjesto razmaka stavljamo - i pretvaramo sve u mala slova
-                this.slug= slugify(this.email,{
+                this.slug= slugify(this.osoba.email,{
                     replacement:'-',
                     remove: /[*+~.()'"!:@]/g,
                     lower: true
@@ -80,7 +80,7 @@ export default {
                     }else
                     {
                        var createUser = firebase.functions().httpsCallable('createUser');
-                        createUser({email: this.email, password: this.password})
+                        createUser({email: this.osoba.email, password: this.password})
                         .then(() => {
                             ref.set(this.osoba)
                             .then(()=>{

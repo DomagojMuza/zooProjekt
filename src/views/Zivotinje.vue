@@ -110,8 +110,8 @@ export default {
               }
               //u slučaju da je izbrisan brišemo ga stranice
               else if(change.type === "removed"){
-                this.zivotinje = this.zivotinje.filter(zivotinje => {
-                  return zivotinje.id != change.doc.id
+                this.zivotinje = this.zivotinje.filter(zivotinja => {
+                  return zivotinja.id != change.doc.id
                 })
               }              
             })

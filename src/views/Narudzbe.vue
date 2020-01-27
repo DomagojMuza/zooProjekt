@@ -1,7 +1,11 @@
 <template>
     <div class="container">
+        <div class="narudzbe-btn">
+            <button @click="promjeni('ne')" class="btn btn-light">Ne poslane</button>
+            <button @click="promjeni('da')" class="btn btn-light">Poslane</button>
+        </div>
         <transition-group name="brisanje">
-          <ul v-for="narudzba in orderBy(narudzbe, 'vrijeme', -1)" :key="narudzba.id" class="brisanje-group">
+          <ul v-for="narudzba in orderBy(filtriraneNarudzbe, 'vrijeme', -1)" :key="narudzba.id" class="brisanje-group">
             <li class="brisanje-group-item">
                 
             <div class="row">
@@ -35,7 +39,7 @@
                     </div>
                     
                     <div class="row">
-                        <button @click="posaljiEmail(narudzba.kupac.email)" class="btn btn-success">Pošalji</button>
+                        <button @click="posaljiEmail(narudzba.kupac.email, narudzba.id)" class="btn btn-success">Pošalji</button>
                     </div>
                 </div>
             </div>
@@ -50,6 +54,8 @@
 import db from '@/firebase/init'
 import Vue2Filters from 'vue2-filters'
 import firebase from 'firebase'
+import Swal from 'sweetalert2/dist/sweetalert2.js'
+import 'sweetalert2/src/sweetalert2.scss'
 
 
 
@@ -58,11 +64,15 @@ export default {
     return{
       narudzbe: [],
       obavijest: false,
-      error:''
+      error:'',
+      search: 'ne'
     }
   },
     mixins: [Vue2Filters.mixin],
     methods:{
+        promjeni(val){
+            this.search= val
+        },
         dohvatiPodatke(){
             //slušamo tablicu narudzbe
             db.collection('narudzbe')
@@ -83,22 +93,44 @@ export default {
                     return narudzbe.id != change.doc.id
                     })
                 } 
+                else if(change.type === "modified"){
+                    this.narudzbe= this.narudzbe.filter(narudzba =>{
+                        return narudzba.poslano != change.doc.poslano
+                    })
+                    
+                } 
                 });
             })
         },
-        posaljiEmail(email){
+        posaljiEmail(email, id){
+            db.collection('narudzbe').doc(id).update({
+                poslano: 'da'
+            })
             var naslov = "Vaša NARUDŽBA je na putu"
             var poruka = "Pošljku možete očekivati unutar 2 radna tjedna, ovisno o mjestu stanovanja"
 
             var addMessage = firebase.functions().httpsCallable('sendMail');
                     addMessage({mail: email, naslovEmaila: naslov, porukaEmaila: poruka}).then(() => {
-                        alert("Potvrda poslana");
+                        Swal.fire({
+                            position: 'top-end',
+                            icon: 'success',
+                            title: 'Email posan',
+                            showConfirmButton: false,
+                            timer: 2000
+                            })
                     });
         }
     },
-    created() {
-        this.dohvatiPodatke()
+    firestore(){
+        return{
+            narudzbe: db.collection('narudzbe')
+        }
     },
+    computed:{
+        filtriraneNarudzbe(){
+            return this.narudzbe.filter(narudzba => narudzba.poslano==this.search);
+        }
+    }
 }
 </script>
 
@@ -123,6 +155,14 @@ export default {
     .detalji{
         margin: 5px 0;
         padding: 5px;
+    }
+
+    .narudzbe-btn{
+        text-align: center;
+    }
+
+    .btn-light{
+        margin: 10px 10px
     }
 
 </style>
