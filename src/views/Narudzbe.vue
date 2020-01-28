@@ -86,7 +86,7 @@ export default {
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'Email posan',
+                            title: 'Email poslan',
                             showConfirmButton: false,
                             timer: 2000
                             })
