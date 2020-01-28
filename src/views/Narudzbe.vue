@@ -73,35 +73,7 @@ export default {
         promjeni(val){
             this.search= val
         },
-        dohvatiPodatke(){
-            //slušamo tablicu narudzbe
-            db.collection('narudzbe')
-            .onSnapshot(snapshot => {
-                snapshot.docChanges().forEach(change => {
-
-                //u slučaju da je element dodan renderamo ga na stranici
-                if (change.type === "added"){
-                    let doc = change.doc
-                    let nastamba = doc.data()
-                    nastamba.id = doc.id
-                    this.narudzbe.push(nastamba)
-                }
-
-                //u slučaju da je izbrisan brišemo ga stranice
-                else if(change.type === "removed"){
-                    this.narudzbe = this.narudzbe.filter(narudzbe => {
-                    return narudzbe.id != change.doc.id
-                    })
-                } 
-                else if(change.type === "modified"){
-                    this.narudzbe= this.narudzbe.filter(narudzba =>{
-                        return narudzba.poslano != change.doc.poslano
-                    })
-                    
-                } 
-                });
-            })
-        },
+    
         posaljiEmail(email, id){
             db.collection('narudzbe').doc(id).update({
                 poslano: 'da'
