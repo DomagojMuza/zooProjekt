@@ -30,6 +30,7 @@
                     </select>
                     <input v-model="zivotinja.prehrana" type="text" class="form-control" placeholder="Prehrana">
                     <input v-model="zivotinja.datumRodenja" type="date" class="form-control" placeholder="Datum rođenja">
+                    <input v-model="zivotinja.datumDolazka" type="date" class="form-control" placeholder="Datum dolazka u zoo">
                 </div>              
             </div>
             <button @click.prevent="upisiPodatke" class="btn btn-primary my-1">Spremmi</button>

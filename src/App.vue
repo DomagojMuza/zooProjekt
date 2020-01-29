@@ -9,7 +9,7 @@
       <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
         <ul  class="navbar-nav">
           <li v-if="$store.state.logged" class="nav-item">
-            <router-link class="nav-link" to="/"><strong>Životinje</strong></router-link>
+            <router-link class="nav-link" to="/zivotinje"><strong>Životinje</strong></router-link>
           </li>
 
           <li v-if="$store.state.logged" class="nav-item" >
@@ -28,7 +28,7 @@
             <router-link  class="nav-link" to="/zaposlenici"><strong>Zaposlenici</strong></router-link>
           </li> 
           <li class="nav-item">
-            <router-link class="nav-link" to="/webshop"><strong>Webshop</strong></router-link>
+            <router-link class="nav-link" to="/"><strong>Webshop</strong></router-link>
           </li>         
           
         </ul>

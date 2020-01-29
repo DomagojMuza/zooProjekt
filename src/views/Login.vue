@@ -44,7 +44,7 @@ export default {
                             //te zovemo mutaciji posatviPosao i prosljeđujemo posao te osobe
                             this.$store.commit("postaviPosao", doc.data().posao);
                             //redirectamo usera na stranicu životinje
-                            this.$router.push('/')
+                            this.$router.push('/zivotinje')
                         })
                     })
             })
@@ -57,9 +57,9 @@ export default {
         },
         async resetajPassword(){    
         const { value: email } = await Swal.fire({
-            title: 'Input email address',
+            title: 'Unesite email',
             input: 'email',
-            inputPlaceholder: 'Enter your email address'
+            inputPlaceholder: 'Unesite email'
         });
 
             if (email) {

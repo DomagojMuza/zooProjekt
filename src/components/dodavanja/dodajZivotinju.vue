@@ -24,12 +24,16 @@
                     <input v-model="zivotinja.tezina" type="number" class="form-control" placeholder="Težina">
                 </div>
                 <div class="col">
-                    <select v-model="zivotinja.nastamba" class="form-control" placeholder="Lijek">
+                    <select v-model="zivotinja.nastamba" class="form-control" placeholder="Nastamba">
                         <option value="">Odaberite nastambu</option>
-                        <option v-for="nastamba in nastambe" :key="nastamba.id">{{capitalizeFirstLetter(nastamba.ime)}}</option>  
+                        <option v-for="nastamba in nastambe" :key="nastamba.id">{{nastamba.ime}}</option>  
                     </select>
-                    <input v-model="zivotinja.prehrana" type="text" class="form-control" placeholder="Prehrana">
-                    <input v-model="zivotinja.datumRodenja" type="date" class="form-control" placeholder="Datum rođenja">
+                    <select v-model="zivotinja.prehrana" class="form-control" placeholder="Prehrana">
+                        <option value="">Odaberite prehranu</option>
+                        <option v-for="prehrana in prehrane" :key="prehrana.id">{{prehrana}}</option>  
+                    </select>
+                    <input v-model="zivotinja.datumRodenja" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" placeholder="Datum rođenja">
+                    <input v-model="zivotinja.datumDolazka" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" placeholder="Datum dolazka u zoo">
                 </div>              
             </div>
             <button @click.prevent="upisiPodatke" class="btn btn-primary my-1">Dodaj</button>
@@ -49,6 +53,7 @@ export default {
             success:'',
             dodana:'',
             nastambe:[],
+            prehrane: ['Svejed', 'Biljojed', 'Mesojed'],
             zivotinja:{
                 broj:'',
                 ime:'',
@@ -57,6 +62,7 @@ export default {
                 tezina:'',
                 prehrana:'',
                 datumRodenja:'',
+                datumDolazka: ''
                 
             }
             
@@ -121,9 +127,6 @@ export default {
                 })
             }       
         },
-        capitalizeFirstLetter(string) {
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
 
 
     },

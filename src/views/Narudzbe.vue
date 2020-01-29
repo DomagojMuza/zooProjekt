@@ -38,7 +38,7 @@
                         </div>
                     </div>
                     
-                    <div class="row">
+                    <div v-if="narudzba.poslano!=='da'" class="row">
                         <button @click="posaljiEmail(narudzba.kupac.email, narudzba.id)" class="btn btn-success">Pošalji</button>
                     </div>
                 </div>
@@ -86,7 +86,7 @@ export default {
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
-                            title: 'Email posan',
+                            title: 'Email poslan',
                             showConfirmButton: false,
                             timer: 2000
                             })

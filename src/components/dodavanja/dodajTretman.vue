@@ -25,8 +25,8 @@
                     </select>
                 </div>
                 <div class="col">
-                    <input v-model="tretman.datumPocetka" type="date" class="form-control" placeholder="Datum pocetka">
-                    <input v-model="tretman.datumZavrsetka" type="date" class="form-control" placeholder="Datum zavrsetka">
+                    <input v-model="tretman.datumPocetka" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" placeholder="Datum pocetka">
+                    <input v-model="tretman.datumZavrsetka" type="text" onfocus="(this.type='date')" onblur="(this.type='text')" class="form-control" placeholder="Datum zavrsetka">
                 </div>              
             </div>
             <button @click.prevent="upisiPodatke" class="btn btn-primary my-1">Dodaj</button>

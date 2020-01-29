@@ -16,7 +16,7 @@
             <div class="row">
                 <div class="col">
                     <input v-model="osoba.email" type="text" class="form-control" placeholder="Email">
-                    <input v-model="password" type="password" class="form-control" placeholder="Passoword">
+                    <input v-model="password" type="password" class="form-control" placeholder="Password">
 
                     <select v-model="osoba.posao" class="form-control" placeholder="Posao">
                         <option value="">Odaberite posao</option>

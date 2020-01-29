@@ -145,7 +145,7 @@ export default {
                             });
 
                     this.$store.commit("isprazniKosaricu", []);
-                    this.$router.push('/webshop')
+                    this.$router.push('/')
                 })
             }
             
